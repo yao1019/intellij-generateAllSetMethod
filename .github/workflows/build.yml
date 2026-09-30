@@ -1,0 +1,32 @@
+name: Build Plugin Zip
+
+on:
+  push:
+    branches: [fix/display-name]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # gradle-intellij-plugin 1.1.2 + IC 2021.3 SDK 时代的组合：JDK 11 + Gradle 7.2(wrapper 自带)
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
+
+      - name: Build plugin
+        env:
+          GRADLE_OPTS: -Xmx2g -Dfile.encoding=UTF-8
+        run: |
+          chmod +x gradlew
+          ./gradlew buildPlugin --no-daemon --stacktrace
+
+      - name: Upload plugin zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: generateallsetter-plugin
+          path: build/distributions/*.zip
+          if-no-files-found: error

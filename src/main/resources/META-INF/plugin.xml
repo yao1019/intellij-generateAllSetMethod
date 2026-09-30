@@ -231,7 +231,8 @@
 
         <applicationService serviceImplementation="com.bruce.intellijplugin.generatesetter.template.GenerateSetterService"/>
 
-        <applicationConfigurable instance="com.bruce.intellijplugin.generatesetter.template.MySettings"/>
+        <applicationConfigurable id="preferences.GenerateAllSetter" displayName="GenerateAllSetter"
+                                 instance="com.bruce.intellijplugin.generatesetter.template.MySettings"/>
 
         <codeInsight.template.postfixTemplateProvider
                 language="JAVA"
